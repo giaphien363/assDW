@@ -6,6 +6,7 @@ use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\ManageRoleController;
+use App\Http\Controllers\RoleUserController;
 
 // route for admin
 
@@ -56,3 +57,22 @@ Route::get('/showrole/{id}', [ManageRoleController::class, 'editrole'])
 
 Route::post('/showrole/{id}', [ManageRoleController::class, 'handle_edit'])
    ->name('admin.handle.editrole');
+
+// role-user
+Route::get('/showrole_user', [RoleUserController::class, 'showrole_user'])
+   ->name('admin.showrole.user');
+
+Route::get('/showrole_user/{id}/del', [RoleUserController::class, 'delrole_user'])
+   ->name('admin.delrole.user');
+
+Route::get('/create/role-user', [RoleUserController::class, 'create'])
+   ->name('admin.createrole.user');
+
+Route::post('/create/role-user', [RoleUserController::class, 'handle_create'])
+   ->name('admin.createrole.user.post');
+
+Route::get('/showrole-user/{id}', [RoleUserController::class, 'editrole_user'])
+   ->name('admin.editrole.user');
+
+Route::post('/showrole-user/{id}', [RoleUserController::class, 'handle_edit'])
+   ->name('admin.handle.editrole.user');
