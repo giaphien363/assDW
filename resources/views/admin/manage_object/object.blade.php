@@ -47,14 +47,15 @@
                         <thead>
                            <tr>
                               <th>ID</th>
-                              <th>object code</th>
-                              <th>object name</th>
+                              <th>Parent Id</th>
+                              <th>Object code</th>
+                              <th>Object url</th>
+                              <th>Object name</th>
                               <th>Description</th>
                               <th>Status</th>
-                              <th>object code</th>
-                              <th>object name</th>
-                              <th>Description</th>
+                              <th>object level</th>
                               <th>Status</th>
+                              <th>Show menu</th>
                               <th></th>
                               <th></th>
                            </tr>
@@ -64,11 +65,11 @@
 
                            <tr>
                               <td>{{ $row->id }}</td>
-                              @if ($row->PARENT_ID != null)
-                              <td>{{ $row->PARENT_ID }}</td>
-                              @else
-                              <td>NUll</td>
-                              @endif
+                           @if ($row->PARENT_ID != null)
+                           <td>{{ $row->PARENT_ID }}</td>
+                           @else
+                           <td>NUll</td>
+                           @endif
                               <td>{{ $row->OBJECT_CODE }}</td>
                               <td>{{ $row->OBJECT_URL }}</td>
                               <td>{{ $row->OBJECT_NAME }}</td>

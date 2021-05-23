@@ -14,8 +14,9 @@ class CreateRoleObjectTable extends Migration
     public function up()
     {
         Schema::create('role_object', function (Blueprint $table) {
-            $table->unsignedInteger('OBJECT_ID');
-            $table->unsignedInteger('ROLE_ID');
+            $table->id();
+            $table->bigInteger('OBJECT_ID')->unsigned();
+            $table->bigInteger('ROLE_ID')->unsigned();
             $table->integer('status')->default(1);
             $table->string('created_by',50)->nullable();
             $table->timestamps();

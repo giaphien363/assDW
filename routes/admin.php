@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\ManageRoleController;
 use App\Http\Controllers\RoleUserController;
 use App\Http\Controllers\ObjectController;
+use App\Http\Controllers\RoleObjectController;
 
 
 // route for admin
@@ -97,3 +98,23 @@ Route::post('/showobject/{id}', [ObjectController::class, 'handle_edit'])
 
 Route::get('/showobject/{id}/del', [ObjectController::class, 'delobject'])
    ->name('admin.delobject');
+
+
+// role Object
+Route::get('/showroleobject', [RoleObjectController::class, 'index'])
+   ->name('admin.showroleobject');
+
+Route::get('/create/role/object', [RoleObjectController::class, 'create'])
+   ->name('admin.createrole.object');
+
+Route::post('/create/role/object', [RoleObjectController::class, 'handle_create'])
+   ->name('admin.createrole.object.post');
+
+Route::get('/showrole/object/{id}', [RoleObjectController::class, 'edit'])
+   ->name('admin.editrole.object');
+
+Route::post('/showrole/object/{id}', [RoleObjectController::class, 'handle_edit'])
+   ->name('admin.handle.editrole.object');
+
+Route::get('/showrole/object/{id}/del', [RoleObjectController::class, 'delrole_object'])
+   ->name('admin.delrole.object');

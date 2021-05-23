@@ -5,7 +5,7 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   <title>Edit new Role User</title>
+   <title>Edit new Role Object</title>
    <!-- Theme style -->
    <link rel="stylesheet" href="{{ asset('admin_page/dist/css/adminlte.min.css') }}">
 </head>
@@ -16,7 +16,7 @@
          <div class="col-sm-8" style="margin: 0 auto">
             <div class="card card-primary mt-5">
                <div class="card-header" style="text-align: center">
-                  <h3 class="card-title" style="float: none">Update new Role User</h3>
+                  <h3 class="card-title" style="float: none">Update Role Object</h3>
                </div>
                <!-- /.card-header -->
                @if (Session::get('fail'))
@@ -27,16 +27,16 @@
                </div>
                @endif
                <!-- form start -->
-               <form action="{{ route('admin.handle.editrole.user', ['id'=>$data['id']]) }}" method="post">
+               <form action="{{ route('admin.handle.editrole.object', ['id'=>$data['id']]) }}" method="post">
                   @csrf
 
                   <div class="card-body">
                      <div class="form-group">
-                        @error('userid')
+                        @error('objid')
                         <p class="text-danger w-100 mt-2 mb-2">{{ $message }}</p>
                         @enderror
-                        <label>User ID</label>
-                        <input required value="{{ $data['USER_ID'] }}" name="userid" type="number" class="form-control" placeholder="Enter User ID">
+                        <label>Object ID</label>
+                        <input required value="{{ $data['OBJECT_ID'] }}" name="objid" type="number" class="form-control" placeholder="Enter User ID">
                      </div>
 
                      <div class="form-group">
@@ -65,7 +65,7 @@
                      <div class="card-footer">
                         <div class="row">
                            <div class="col-sm-6">
-                              <a href="{{ route('admin.showrole.user') }}">back &rarr;</a>
+                              <a href="{{ route('admin.showroleobject') }}">back &rarr;</a>
                            </div>
                            <div class="col-sm-6 d-flex" style="justify-content: flex-end">
                               <button type="submit" class="btn btn-primary">Update</button>

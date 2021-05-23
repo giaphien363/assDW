@@ -14,8 +14,8 @@ class CreateObjectsTable extends Migration
     public function up()
     {
         Schema::create('objects', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('PARENT_ID')->nullable();
+            $table->id('id');
+            $table->bigInteger('PARENT_ID')->unsigned()->nullable();
             $table->string('OBJECT_CODE',50)->unique();
             $table->string('OBJECT_URL',500)->nullable();
             $table->string('OBJECT_NAME',100);

@@ -65,6 +65,25 @@
                   </p>
                </a>
             </li>
+            
+            <li class="nav-item">
+               <a href="{{ route('admin.showobject') }}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>
+                     Show Object
+                  </p>
+               </a>
+            </li>
+            
+            <li class="nav-item">
+               <a href="{{ route('admin.showroleobject') }}" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>
+                     Show Role Object
+                  </p>
+               </a>
+            </li>
+
             <li class="nav-item">
                <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-edit"></i>
@@ -83,14 +102,7 @@
 
                </ul>
             </li>
-            <li class="nav-item">
-               <a href="{{ route('admin.showobject') }}" class="nav-link">
-                  <i class="nav-icon fas fa-copy"></i>
-                  <p>
-                     Show Object
-                  </p>
-               </a>
-            </li>
+            
 
          </ul>
       </nav>
