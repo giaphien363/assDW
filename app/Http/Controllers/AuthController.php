@@ -96,8 +96,24 @@ class AuthController extends Controller
         }
 
         $save = $user->save();
+
         if ($save) {
-            return back()->with('success', 'Create success account !');
+            $cre = $request->only(['username', 'password']);
+
+
+            if (Auth::attempt($cre)) {
+                if (Auth::user()->status == 1) {
+                    return redirect()->route('dashboard');
+                }
+                Auth::logout();
+                return back()->with([
+                    'fail' => 'We do not recognize your account',
+                ]);
+            } else {
+                return back()->with([
+                    'fail' => 'We do not recognize your account',
+                ]);
+            }
         } else {
             return back()->with('fail', 'an error occurred!');
         }

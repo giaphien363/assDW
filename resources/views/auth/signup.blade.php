@@ -55,12 +55,12 @@
             </div>
 
             <div class="wrap-input100 validate-input" data-validate="Phone number is required">
-               @error('telephone')
+               @error('phone')
                <p class="text-danger w-100 mt-2 mb-2">{{ $message }}</p>
                @enderror
 
                <span class="label-input100">Phone number*</span>
-               <input class="input100" type="tel" name="telephone" value="{{ old('telephone') }}" placeholder="Phone number...">
+               <input class="input100" type="tel" name="phone" value="{{ old('phone') }}" placeholder="Phone number...">
                <span class="focus-input100"></span>
             </div>
 

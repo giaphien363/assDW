@@ -55,8 +55,13 @@
             <ul class="nav-menu list-unstyled">
                <li><a href="#header" class="smoothScroll">Home</a></li>
                <li><a href="#contact" class="smoothScroll">Contact</a></li>
+               
+               @if(Auth::check())
 
+               <li><a href="{{ route('dashboard') }}" class="smoothScroll">dashboard</a></li>
+               @else
                <li><a href="{{ route('login') }}" class="smoothScroll">Login</a></li>
+               @endif
 
             </ul>
 
@@ -218,7 +223,7 @@
                      </a>
                   </div>
 
-                  
+
                   <div class="col-lg-4 col-md-6 portfolio-thumbnail all branding uikits webdesign">
                      <a class="popup-img" href="javascript: void(0)">
                         <img src="{{ asset('home_page/images/portfolio/3.jpg') }}" alt="img">
@@ -231,7 +236,7 @@
                      </a>
                   </div>
 
-                  
+
                   <div class="col-lg-4 col-md-6 portfolio-thumbnail all branding uikits webdesign">
                      <a class="popup-img" href="javascript: void(0)">
                         <img src="{{ asset('home_page/images/portfolio/5.jpg') }}" alt="img">
@@ -244,7 +249,7 @@
                      </a>
                   </div>
 
-                  
+
 
                </div>
             </div>
