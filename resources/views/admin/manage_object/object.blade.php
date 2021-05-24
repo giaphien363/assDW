@@ -10,7 +10,7 @@
       <div class="container-fluid">
          <div class="row mb-2">
             <div class="col-sm-6">
-               <h1>object Tables</h1>
+               <h1>Object Tables</h1>
             </div>
             <div class="col-sm-6">
                <ol class="breadcrumb float-sm-right">
@@ -52,10 +52,9 @@
                               <th>Object url</th>
                               <th>Object name</th>
                               <th>Description</th>
-                              <th>Status</th>
                               <th>object level</th>
-                              <th>Status</th>
                               <th>Show menu</th>
+                              <th>Status</th>
                               <th></th>
                               <th></th>
                            </tr>
@@ -64,28 +63,30 @@
                            @foreach ($dsobject as $row)
 
                            <tr>
-                              <td>{{ $row->id }}</td>
-                           @if ($row->PARENT_ID != null)
-                           <td>{{ $row->PARENT_ID }}</td>
+                              <td>{{ $row['id'] }}</td>
+
+                           @if ($row['PARENT_ID'] != null)
+                           <td>{{ $row['PARENT_ID'] }}</td>
                            @else
                            <td>NUll</td>
                            @endif
-                              <td>{{ $row->OBJECT_CODE }}</td>
-                              <td>{{ $row->OBJECT_URL }}</td>
-                              <td>{{ $row->OBJECT_NAME }}</td>
-                              <td>{{ $row->DESCRIPTION }}</td>
-                              <td>{{ $row->OBJECT_LEVEL }}</td>
-                              <td>{{ $row->status }}</td>
-                              <td>{{ $row->SHOW_MENU }}</td>
+
+                              <td>{{ $row['OBJECT_CODE'] }}</td>
+                              <td>{{ $row['OBJECT_URL'] }}</td>
+                              <td>{{ $row['OBJECT_NAME'] }}</td>
+                              <td>{{ $row['DESCRIPTION'] }}</td>
+                              <td>{{ $row['OBJECT_LEVEL'] }}</td>
+                              <td>{{ $row['SHOW_MENU'] }}</td>
+                              <td>{{ $row['status'] }}</td>
                               <td>
-                                 <a href="{{ route('admin.editobject', ['id'=>$row->id]) }}">
+                                 <a href="{{ route('admin.editobject', ['id'=>$row['id'] ]) }}">
                                     edit
                                  </a>
                               </td>
 
                               <td>
-                                 @if ($row->status == 1)
-                                 <a href="{{ route('admin.delobject', ['id'=>$row->id]) }}">
+                                 @if ($row['status'] == 1)
+                                 <a href="{{ route('admin.delobject', ['id'=>$row['id'] ]) }}">
                                     delete
                                  </a>
                                  @else

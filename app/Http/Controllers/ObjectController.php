@@ -19,7 +19,11 @@ class ObjectController extends Controller
      */
     public function index()
     {
-        $dsobject = DB::select('select * from objects where status = ?', [1]);
+        // $dsobject = DB::select('select * from objects where status = ?', [1]);
+        
+        $dsobject = Objects::all()->toArray();
+        // dd($dsobject[0]['status']);
+
         return view('admin.manage_object.object', compact("dsobject"));
     }
 

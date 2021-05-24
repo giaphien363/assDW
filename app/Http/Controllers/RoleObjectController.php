@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Objects;
+use App\Models\Role;
 
 class RoleObjectController extends Controller
 {
@@ -46,16 +48,25 @@ class RoleObjectController extends Controller
         ]);
         // dd($request->all());
 
-        $role_obj = DB::table('role_object')->insert([
-            'OBJECT_ID' => $request->objid,
-            'ROLE_ID' => $request->roleid,
-            'created_by' => Auth::guard('admin')->user()->username
-        ]);
 
-        if ($role_obj) {
-            return redirect()->route('admin.showroleobject');
+        $role = Role::where('id', $request->roleid)->first();
+        $obj = Objects::where('id', $request->objid)->first();
+
+        if ($role && $obj) {
+
+            $role_obj = DB::table('role_object')->insert([
+                'OBJECT_ID' => $request->objid,
+                'ROLE_ID' => $request->roleid,
+                'created_by' => Auth::guard('admin')->user()->username
+            ]);
+
+            if ($role_obj) {
+                return redirect()->route('admin.showroleobject');
+            } else {
+                return back()->with('fail', 'an error occurred!');
+            }
         } else {
-            return back()->with('fail', 'an error occurred!');
+            return back()->with('fail', 'ID was not found!');
         }
     }
 
@@ -74,18 +85,27 @@ class RoleObjectController extends Controller
             'status' => 'required'
         ]);
 
-        $role_obj = DB::table('role_object')
-            ->where('id', $id)
-            ->update([
-                'OBJECT_ID' => $request->objid,
-                'ROLE_ID' => $request->roleid,
-                'status' => $request->status,
-            ]);
+        $role = Role::where('id', $request->roleid)->first();
+        $obj = Objects::where('id', $request->objid)->first();
 
-        if ($role_obj) {
-            return redirect()->route('admin.showroleobject');
+        if ($role && $obj) {
+
+
+            $role_obj = DB::table('role_object')
+                ->where('id', $id)
+                ->update([
+                    'OBJECT_ID' => $request->objid,
+                    'ROLE_ID' => $request->roleid,
+                    'status' => $request->status,
+                ]);
+
+            if ($role_obj) {
+                return redirect()->route('admin.showroleobject');
+            } else {
+                return back()->with('fail', 'an error occurred!');
+            }
         } else {
-            return back()->with('fail', 'an error occurred!');
+            return back()->with('fail', 'ID was not found!');
         }
     }
 }

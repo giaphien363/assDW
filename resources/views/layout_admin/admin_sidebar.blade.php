@@ -58,19 +58,19 @@
             </li>
 
             <li class="nav-item">
-               <a href="{{ route('admin.showrole.user') }}" class="nav-link">
-                  <i class="nav-icon fas fa-chart-pie"></i>
-                  <p>
-                     Show Role Users
-                  </p>
-               </a>
-            </li>
-            
-            <li class="nav-item">
                <a href="{{ route('admin.showobject') }}" class="nav-link">
                   <i class="nav-icon fas fa-copy"></i>
                   <p>
                      Show Object
+                  </p>
+               </a>
+            </li>
+
+            <li class="nav-item">
+               <a href="{{ route('admin.showrole.user') }}" class="nav-link">
+                  <i class="nav-icon fas fa-chart-pie"></i>
+                  <p>
+                     Show Role Users
                   </p>
                </a>
             </li>

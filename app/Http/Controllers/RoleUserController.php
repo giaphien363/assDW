@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Role;
+use App\Models\User;
 
 class RoleUserController extends Controller
 {
@@ -44,17 +46,23 @@ class RoleUserController extends Controller
             'roleid' => 'required | numeric',
         ]);
         // dd($request->all());
+        $role = Role::where('id', $request->roleid)->first();
+        $user = User::where('id', $request->userid)->first();
 
-        $role_user = DB::table('role_user')->insert([
-            'USER_ID' => $request->userid,
-            'ROLE_ID' => $request->roleid,
-            'created_by' => Auth::guard('admin')->user()->username
-        ]);
+        if ($role && $user) {
+            $role_user = DB::table('role_user')->insert([
+                'USER_ID' => $request->userid,
+                'ROLE_ID' => $request->roleid,
+                'created_by' => Auth::guard('admin')->user()->username
+            ]);
 
-        if ($role_user) {
-            return redirect()->route('admin.showrole.user');
+            if ($role_user) {
+                return redirect()->route('admin.showrole.user');
+            } else {
+                return back()->with('fail', 'an error occurred!');
+            }
         } else {
-            return back()->with('fail', 'an error occurred!');
+            return back()->with('fail', 'ID was not found!');
         }
     }
 
@@ -73,18 +81,25 @@ class RoleUserController extends Controller
             'status' => 'required'
         ]);
 
-        $role_user = DB::table('role_user')
-            ->where('id', $id)
-            ->update([
-                'USER_ID' => $request->userid,
-                'ROLE_ID' => $request->roleid,
-                'status' => $request->status,
-            ]);
+        $role = Role::where('id', $request->roleid)->first();
+        $user = User::where('id', $request->userid)->first();
 
-        if ($role_user) {
-            return redirect()->route('admin.showrole.user');
+        if ($role && $user) {
+            $role_user = DB::table('role_user')
+                ->where('id', $id)
+                ->update([
+                    'USER_ID' => $request->userid,
+                    'ROLE_ID' => $request->roleid,
+                    'status' => $request->status,
+                ]);
+
+            if ($role_user) {
+                return redirect()->route('admin.showrole.user');
+            } else {
+                return back()->with('fail', 'an error occurred!');
+            }
         } else {
-            return back()->with('fail', 'an error occurred!');
+            return back()->with('fail', 'ID was not found!');
         }
     }
 }
