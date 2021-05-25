@@ -23,7 +23,9 @@ class RoleObjectController extends Controller
             return (array) $item;
         }, $role_obj);
 
-        return view('admin.manage_role_obj.show_role_obj')->with('data', $role_obj);
+        return redirect()->route('admin.showrole');
+
+        // return view('admin.manage_role_obj.show_role_obj')->with('data', $role_obj);
     }
 
     public function delrole_object($id)
@@ -43,69 +45,78 @@ class RoleObjectController extends Controller
     public function handle_create(Request $request)
     {
         $request->validate([
-            'objid' => 'required | numeric',
-            'roleid' => 'required | numeric',
+            'rolecode' => 'required ',
+            'objid' => 'required ',
         ]);
-        // dd($request->all());
 
 
-        $role = Role::where('id', $request->roleid)->first();
-        $obj = Objects::where('id', $request->objid)->first();
+        $role = Role::where('ROLE_CODE', $request->rolecode)->first();
+        $obj = Objects::whereIn('id', $request->objid)->get();
 
-        if ($role && $obj) {
+        // dd($obj[0]);
 
+        if ($role == null) {
+            return back()->with('fail', 'Role code was not found!');
+        }
+
+        if (count($obj) == 0) {
+            return back()->with('fail', 'User name was not found!');
+        }
+
+        foreach ($obj as $item) {
             $role_obj = DB::table('role_object')->insert([
-                'OBJECT_ID' => $request->objid,
-                'ROLE_ID' => $request->roleid,
+                'OBJECT_ID' => $item['id'],
+                'ROLE_ID' => $role['id'],
                 'created_by' => Auth::guard('admin')->user()->username
             ]);
-
-            if ($role_obj) {
-                return redirect()->route('admin.showroleobject');
-            } else {
-                return back()->with('fail', 'an error occurred!');
-            }
-        } else {
-            return back()->with('fail', 'ID was not found!');
         }
+
+        return redirect()->route('admin.showroleobject');
     }
 
     public function edit($id)
     {
         $role_obj = DB::table('role_object')->where('id', $id)->first();
         $role_obj = (array)$role_obj;
-        return view('admin.manage_role_obj.edit_role_obj')->with('data', $role_obj);
+
+        $role = Role::where('id', $role_obj['ROLE_ID'])->first();
+        // dd($role_obj);
+
+        $all_obj = Objects::all()->toArray();
+
+        return view('admin.manage_role_obj.edit_role_obj')->with('data', $role_obj)->with('role', $role)->with('allobj', $all_obj);
     }
 
     public function handle_edit($id, Request $request)
     {
         $request->validate([
             'objid' => 'required | numeric',
-            'roleid' => 'required | numeric',
+            'rolecode' => 'required',
             'status' => 'required'
         ]);
 
-        $role = Role::where('id', $request->roleid)->first();
+        $role = Role::where('ROLE_CODE', $request->rolecode)->first();
+
         $obj = Objects::where('id', $request->objid)->first();
 
-        if ($role && $obj) {
+        // dd($obj['id']);
 
-
-            $role_obj = DB::table('role_object')
-                ->where('id', $id)
-                ->update([
-                    'OBJECT_ID' => $request->objid,
-                    'ROLE_ID' => $request->roleid,
-                    'status' => $request->status,
-                ]);
-
-            if ($role_obj) {
-                return redirect()->route('admin.showroleobject');
-            } else {
-                return back()->with('fail', 'an error occurred!');
-            }
-        } else {
-            return back()->with('fail', 'ID was not found!');
+        if ($role == null) {
+            return back()->with('fail', 'Role code was not found!');
         }
+
+        if ($obj == null) {
+            return back()->with('fail', 'Object ID was not found!');
+        }
+
+        $role_obj = DB::table('role_object')
+            ->where('id', $id)
+            ->update([
+                'OBJECT_ID' => $obj['id'],
+                'ROLE_ID' => $role['id'],
+                'status' => $request->status,
+            ]);
+
+        return redirect()->route('admin.showrole');
     }
 }

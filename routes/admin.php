@@ -12,6 +12,9 @@ use App\Http\Controllers\RoleObjectController;
 
 
 // route for admin
+// Route::get('/test', function () {
+//    return view('admin.manage_user.edituser');
+// });
 
 // admin
 Route::get('/admin_logout_logout', [AdminController::class, 'logout'])->name('admin.logout');

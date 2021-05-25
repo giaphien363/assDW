@@ -5,7 +5,7 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   <title>Edit new Role User</title>
+   <title>Edit Role User</title>
    <!-- Theme style -->
    <link rel="stylesheet" href="{{ asset('admin_page/dist/css/adminlte.min.css') }}">
 </head>
@@ -15,8 +15,8 @@
       <div class="row">
          <div class="col-sm-8" style="margin: 0 auto">
             <div class="card card-primary mt-5">
-               <div class="card-header" style="text-align: center">
-                  <h3 class="card-title" style="float: none">Update new Role User</h3>
+               <div class="card-header bg-secondary" style="text-align: center">
+                  <h3 class="card-title" style="float: none">Update Role User</h3>
                </div>
                <!-- /.card-header -->
                @if (Session::get('fail'))
@@ -31,31 +31,35 @@
                   @csrf
 
                   <div class="card-body">
+
                      <div class="form-group">
-                        @error('userid')
+                        @error('username')
                         <p class="text-danger w-100 mt-2 mb-2">{{ $message }}</p>
                         @enderror
-                        <label>User ID</label>
-                        <input required value="{{ $data['USER_ID'] }}" name="userid" type="number" class="form-control" placeholder="Enter User ID">
+                        <label>User Name</label>
+                        <input required value="{{  $data['username'] }}" name="username" type="text" class="form-control">
                      </div>
 
                      <div class="form-group">
-                        @error('roleid')
+                        @error('rolecode')
                         <p class="text-danger w-100 mt-2 mb-2">{{ $message }}</p>
                         @enderror
-                        <label>Role ID</label>
-                        <input required value="{{ $data['ROLE_ID'] }}" name="roleid" type="number" class="form-control" placeholder="Enter Role ID">
+                        <label>Role Code</label>
+                        <input required value="{{ $data['rolecode'] }}" name="rolecode" type="text" class="form-control">
                      </div>
 
                      <div class="wrap-input100 ">
                         <div class="form-group">
                            <label>Status</label>
+
                            <select name="status" class="form-control select2" style="width: 100%;">
-                              <option selected="selected">{{ $data['status'] }}</option>
+                              <option selected="selected" value="{{$data['status']}}">
+                                 {{ $data['status']==1 ? 'Active': 'Deactive'}}
+                              </option>
                               @if ($data['status']==1)
-                              <option>0</option>
+                              <option value="0">Deactive</option>
                               @else
-                              <option>1</option>
+                              <option value="1">Active</option>
                               @endif
                            </select>
                         </div>
@@ -65,10 +69,10 @@
                      <div class="card-footer">
                         <div class="row">
                            <div class="col-sm-6">
-                              <a href="{{ route('admin.showrole.user') }}">back &rarr;</a>
+                              <a href="{{ route('admin.showrole.user') }}" class="btn btn-info">Back</a>
                            </div>
                            <div class="col-sm-6 d-flex" style="justify-content: flex-end">
-                              <button type="submit" class="btn btn-primary">Update</button>
+                              <button type="submit" class="btn btn-success">Update</button>
                            </div>
                         </div>
                      </div>

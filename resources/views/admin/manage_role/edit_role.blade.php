@@ -15,7 +15,7 @@
       <div class="row">
          <div class="col-sm-8" style="margin: 0 auto">
             <div class="card card-primary mt-5">
-               <div class="card-header" style="text-align: center">
+               <div class="card-header bg-secondary" style="text-align: center">
                   <h3 class="card-title" style="float: none">Update new Role</h3>
                </div>
                <!-- /.card-header -->
@@ -59,12 +59,15 @@
                      <div class="wrap-input100 ">
                         <div class="form-group">
                            <label>Status</label>
+
                            <select name="status" class="form-control select2" style="width: 100%;">
-                              <option selected="selected">{{ $data['status'] }}</option>
+                              <option selected="selected" value="{{$data['status']}}">
+                                 {{ $data['status']==1 ? 'Active': 'Deactive'}}
+                              </option>
                               @if ($data['status']==1)
-                              <option>0</option>
+                              <option value="0">Deactive</option>
                               @else
-                              <option>1</option>
+                              <option value="1">Active</option>
                               @endif
                            </select>
                         </div>
@@ -76,10 +79,10 @@
                      <div class="card-footer">
                         <div class="row">
                            <div class="col-sm-6">
-                              <a href="{{ route('admin.showrole') }}">back &rarr;</a>
+                              <a class="btn btn-info" href="{{ route('admin.showrole') }}">back</a>
                            </div>
                            <div class="col-sm-6 d-flex" style="justify-content: flex-end">
-                              <button type="submit" class="btn btn-primary">Update</button>
+                              <button type="submit" class="btn btn-success">Update</button>
                            </div>
                         </div>
                      </div>

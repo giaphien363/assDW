@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Objects;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ManageRoleController extends Controller
 {
@@ -16,8 +18,38 @@ class ManageRoleController extends Controller
     public function showrole()
     {
         $role = Role::all()->toArray();
-        // dd($role);
-        return view('admin.manage_role.show_role')->with('data', $role);
+        // dd($role[0]['id']);
+
+        $role_obj = DB::table('role_object')->get()->toArray();
+        $role_obj = array_map(function ($item) {
+            return (array) $item;
+        }, $role_obj);
+
+        $result = [];
+
+        foreach ($role_obj as $item) {
+            $rl = Role::where('id', $item['ROLE_ID'])->first();
+            $obj = Objects::where('id', $item['OBJECT_ID'])->first();
+
+
+            $temp = [
+                'id' => $item['id'],
+                'rolename' => $rl['ROLE_NAME'],
+                'objname' => $obj['OBJECT_NAME'],
+                'created_by' => $item['created_by'],
+                'status' => $item['status']
+            ];
+
+            array_push($result, $temp);
+        };
+
+        //
+
+        $all_obj = Objects::all()->toArray();
+
+        // dd($all_obj[1]);
+
+        return view('admin.manage_role.show_role')->with('data', $role)->with('roleobj', $result)->with('allobj', $all_obj);
     }
 
     public function delrole($id)
@@ -76,7 +108,7 @@ class ManageRoleController extends Controller
             'description' => 'required | max:500',
             'status' => 'required'
         ]);
-        
+
         $role = Role::where('id', $id)->first();
 
         $role->ROLE_CODE = $request->role_code;

@@ -26,6 +26,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
+                <!-- role obj-->
                 <div class="col-12">
                     <div class="card">
                         <div class="row">
@@ -92,6 +93,9 @@
 
 
                 </div>
+                <!-- end role obj-->
+
+
                 <!-- /.col -->
             </div>
             <!-- /.row -->

@@ -8,6 +8,8 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\EditRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\Role;
 
 class ManageUserController extends Controller
 {
@@ -68,9 +70,33 @@ class ManageUserController extends Controller
 
     public function showuser()
     {
-        $users = User::all()->toArray();
+        $users = User::paginate(2);
+
         // dd($users);
-        return view('admin.manage_user.show_user')->with('data', $users);
+
+        $role_user = DB::table('role_user')->get()->toArray();
+        $role_user = array_map(function ($item) {
+            return (array) $item;
+        }, $role_user);
+
+        $result = [];
+
+
+        foreach ($role_user as $item) {
+            $role = Role::where('id', $item['ROLE_ID'])->first();
+            $user = User::where('id', $item['USER_ID'])->first();
+
+            $temp = [
+                'id' => $item['id'],
+                'username' => $user['username'],
+                'rolename' => $role['ROLE_NAME'],
+                'created_by'=>$item['created_by'],
+                'status'=>$item['status']
+            ];
+            array_push($result, $temp);
+        };
+
+        return view('admin.manage_user.show_user')->with('data', $users)->with('roleuser', $result);
     }
 
     public function deluser($id)
@@ -87,7 +113,7 @@ class ManageUserController extends Controller
     {
         $user = User::where('id', $id)->first();
 
-        return view('admin.manage_user.edit_user')->with('data', $user);
+        return view('admin.manage_user.edituser')->with('data', $user);
     }
 
 

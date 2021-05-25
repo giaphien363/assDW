@@ -120,6 +120,7 @@
                   <i class="fa fa-long-arrow-right m-l-5"></i>
                </a>
             </div>
+        
          </form>
       </div>
 

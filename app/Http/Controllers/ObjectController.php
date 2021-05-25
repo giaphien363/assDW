@@ -20,9 +20,8 @@ class ObjectController extends Controller
     public function index()
     {
         // $dsobject = DB::select('select * from objects where status = ?', [1]);
-        
+
         $dsobject = Objects::all()->toArray();
-        // dd($dsobject[0]['status']);
 
         return view('admin.manage_object.object', compact("dsobject"));
     }
@@ -34,7 +33,7 @@ class ObjectController extends Controller
      */
     public function create()
     {
-        $dsobject = DB::select('select * from objects where status = ?', [1]);
+        $dsobject = DB::select('select * from objects');
         return view('admin.manage_object.create_object', compact("dsobject"));
     }
 
@@ -68,7 +67,7 @@ class ObjectController extends Controller
 
     public function editobject($id)
     {
-        $dsobject = DB::select('select * from objects where status = ?', [1]);
+        $dsobject = DB::select('select * from objects');
         $object = Objects::where('id', $id)->first();
         return view('admin.manage_object.edit_object', compact("dsobject"))->with('data', $object);
     }
@@ -82,9 +81,10 @@ class ObjectController extends Controller
             'description' => 'required | max:500',
             'status' => 'required'
         ]);
-        
+
         $object = Objects::where('id', $id)->first();
 
+        $object->PARENT_ID = $request->parent_id;
         $object->OBJECT_CODE = $request->object_code;
         $object->OBJECT_NAME = $request->object_name;
         $object->OBJECT_URL = $request->object_url;

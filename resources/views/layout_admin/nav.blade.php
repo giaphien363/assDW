@@ -132,6 +132,14 @@
          </a>
       </li>
 
+      <li class="nav-item">
+         @if (str_starts_with($_SERVER['REQUEST_URI'], '/admin'))
+         <a class="nav-link" href="{{ route('dashboard') }}">AD</a>
+         @else
+         <a class="nav-link" href="{{ route('admin.dashboard') }}">AD</a>
+         @endif
+      </li>
+
    </ul>
 </nav>
 <!-- /.navbar -->
