@@ -15,7 +15,7 @@ class AdminController extends Controller
 
     public function login()
     {
-        
+
         if (Auth::guard('admin')->check()) {
             return redirect()->route('admin.dashboard');
         }
@@ -41,5 +41,30 @@ class AdminController extends Controller
                 'fail' => 'We do not recognize your account',
             ]);
         }
+    }
+
+    public function login_hienanh()
+    {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return view('admin.admin_login.admin_login_hienanh');
+    }
+    public function login_duong()
+    {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return view('admin.admin_login.admin_login_duong');
+    }
+    public function login_hoang()
+    {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return view('admin.admin_login.admin_login_hoang');
     }
 }
